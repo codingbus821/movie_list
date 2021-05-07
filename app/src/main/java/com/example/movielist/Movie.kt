@@ -9,5 +9,7 @@ data class Movie(
     @SerializedName("poster_path") val posterPath: String,
     @SerializedName("backdrop_path") val backdropPath: String,
     @SerializedName("vote_average") val rating: Float,
-    @SerializedName("release_date") val releaseDate: String
+    @SerializedName("release_date") val releaseDate: String,
+    @SerializedName("adult") val adult: Boolean,
+    @SerializedName("genre_ids") val genre_ids: Array<Int>
 )

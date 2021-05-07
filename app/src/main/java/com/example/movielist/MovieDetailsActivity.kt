@@ -2,9 +2,11 @@ package com.example.movielist
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
+import androidx.appcompat.app.ActionBar
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
@@ -14,6 +16,8 @@ const val MOVIE_TITLE = "extra_movie_title"
 const val MOVIE_RATING = "extra_movie_rating"
 const val MOVIE_RELEASE_DATE = "extra_movie_release_date"
 const val MOVIE_OVERVIEW = "extra_movie_overview"
+const val MOVIE_ADULT = "extra_movie_adult"
+const val MOVIE_GENRE_IDS = "extra_movie_genre_ids"
 
 class MovieDetailsActivity : AppCompatActivity() {
 
@@ -27,6 +31,11 @@ class MovieDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_details)
+
+        var actionBar : ActionBar?
+
+        actionBar = supportActionBar;
+        actionBar?.hide();
 
         backdrop = findViewById(R.id.movie_backdrop)
         poster = findViewById(R.id.movie_poster)
@@ -45,6 +54,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     }
 
     private fun populateDetails(extras: Bundle) {
+
         extras.getString(MOVIE_BACKDROP)?.let { backdropPath ->
             Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w1280$backdropPath")
@@ -55,13 +65,13 @@ class MovieDetailsActivity : AppCompatActivity() {
         extras.getString(MOVIE_POSTER)?.let { posterPath ->
             Glide.with(this)
                 .load("https://image.tmdb.org/t/p/w342$posterPath")
-                .transform(CenterCrop())
+               .transform(CenterCrop())
                 .into(poster)
         }
 
         title.text = extras.getString(MOVIE_TITLE, "")
         rating.rating = extras.getFloat(MOVIE_RATING, 0f) / 2
-        releaseDate.text = extras.getString(MOVIE_RELEASE_DATE, ""+" 발매")
+        releaseDate.text = extras.getString(MOVIE_RELEASE_DATE, "")
         overview.text = extras.getString(MOVIE_OVERVIEW, "")
     }
 }

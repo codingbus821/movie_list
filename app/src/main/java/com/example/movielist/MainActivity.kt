@@ -8,16 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.movielist.MoviesRepository.getTopRatedMovies
-import com.example.movielist.MoviesRepository.getUpcomingMovies
-import com.google.gson.annotations.SerializedName
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,6 +39,20 @@ class MainActivity : AppCompatActivity() {
         actionBar = supportActionBar;
         actionBar?.hide();
 
+        //개봉 예정
+        upcomingMovies = findViewById(R.id.upcoming_movies)
+        upcomingMoviesLayoutMgr = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
+        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        upcomingMovies.adapter = upcomingMoviesAdapter
+        //
+
+
+        //인기
         popularMovies = findViewById(R.id.popular_movies)
         popularMoviesLayoutMgr = LinearLayoutManager(
             this,
@@ -58,9 +63,9 @@ class MainActivity : AppCompatActivity() {
         popularMovies.layoutManager = popularMoviesLayoutMgr
         popularMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
         popularMovies.adapter = popularMoviesAdapter
+        //
 
-        getPopularMovies()
-
+        //높은 평점
         topRatedMovies = findViewById(R.id.top_rated_movies)
         topRatedMoviesLayoutMgr = LinearLayoutManager(
             this,
@@ -70,19 +75,7 @@ class MainActivity : AppCompatActivity() {
         topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
         topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
         topRatedMovies.adapter = topRatedMoviesAdapter
-
-        getPopularMovies()
-        getTopRatedMovies()
-
-        upcomingMovies = findViewById(R.id.upcoming_movies)
-        upcomingMoviesLayoutMgr = LinearLayoutManager(
-            this,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-        upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
-        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
-        upcomingMovies.adapter = upcomingMoviesAdapter
+        //
 
         getPopularMovies()
         getTopRatedMovies()
@@ -96,8 +89,10 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(MOVIE_POSTER, movie.posterPath)
         intent.putExtra(MOVIE_TITLE, movie.title)
         intent.putExtra(MOVIE_RATING, movie.rating)
-        intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate)
+        intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate+" 발매")
         intent.putExtra(MOVIE_OVERVIEW, movie.overview)
+        intent.putExtra(MOVIE_ADULT, movie.adult)
+        intent.putExtra(MOVIE_GENRE_IDS, movie.genre_ids)
         startActivity(intent)
     }
 
