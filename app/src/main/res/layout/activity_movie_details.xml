@@ -124,5 +124,18 @@
             app:layout_constraintStart_toEndOf="@+id/movie_poster_card"
             app:layout_constraintTop_toBottomOf="@+id/movie_title" />
 
+        <TextView
+            android:id="@+id/ratingnum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="TextView"
+            android:textColor="#F0E37C"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/movie_rating"
+            app:layout_constraintTop_toBottomOf="@+id/movie_release_date" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>

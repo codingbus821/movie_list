@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -30,6 +31,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var releaseDate: TextView
     private lateinit var overview: TextView
     private lateinit var adult: TextView
+    private lateinit var ratingnum: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,8 +39,12 @@ class MovieDetailsActivity : AppCompatActivity() {
 
         var actionBar : ActionBar?
 
-        actionBar = supportActionBar;
-        actionBar?.hide();
+        actionBar = supportActionBar
+        actionBar?.hide()
+
+        val window = window
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         backdrop = findViewById(R.id.movie_backdrop)
         poster = findViewById(R.id.movie_poster)
@@ -47,6 +53,7 @@ class MovieDetailsActivity : AppCompatActivity() {
         releaseDate = findViewById(R.id.movie_release_date)
         overview = findViewById(R.id.movie_overview)
         adult = findViewById(R.id.movie_adult)
+        ratingnum = findViewById(R.id.ratingnum)
 
         val extras = intent.extras
 
@@ -81,7 +88,7 @@ class MovieDetailsActivity : AppCompatActivity() {
             adult.visibility = View.GONE
         }
 
-
+        ratingnum.text = extras.getFloat(MOVIE_RATING).toString()
         title.text = extras.getString(MOVIE_TITLE, "")
         rating.rating = extras.getFloat(MOVIE_RATING, 0f) / 2
         releaseDate.text = extras.getString(MOVIE_RELEASE_DATE, "")

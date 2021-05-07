@@ -30,14 +30,32 @@ class MainActivity : AppCompatActivity() {
 
     private var upcomingMoviesPage = 1
 
+    private lateinit var nowMovies: RecyclerView
+    private lateinit var nowMoviesAdapter: MoviesAdapter
+    private lateinit var nowMoviesLayoutMgr: LinearLayoutManager
+
+    private var nowMoviesPage = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         var actionBar : ActionBar?
 
-        actionBar = supportActionBar;
-        actionBar?.hide();
+        actionBar = supportActionBar
+        actionBar?.hide()
+
+        //현재 상영중
+        nowMovies = findViewById(R.id.now_movies)
+        nowMoviesLayoutMgr = LinearLayoutManager(
+            this,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        nowMovies.layoutManager = nowMoviesLayoutMgr
+        nowMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        nowMovies.adapter = nowMoviesAdapter
+        //
 
         //개봉 예정
         upcomingMovies = findViewById(R.id.upcoming_movies)
@@ -77,15 +95,15 @@ class MainActivity : AppCompatActivity() {
         topRatedMovies.adapter = topRatedMoviesAdapter
         //
 
+        getNowMovies()
         getPopularMovies()
         getTopRatedMovies()
         getUpcomingMovies()
 
+
     }
 
-    private fun getDetail() {
-        MoviesRepository.getlist()
-    }
+
 
     private fun showMovieDetails(movie: Movie) {
         val intent = Intent(this, MovieDetailsActivity::class.java)
@@ -105,6 +123,14 @@ class MainActivity : AppCompatActivity() {
         MoviesRepository.getUpcomingMovies(
             upcomingMoviesPage,
             ::onUpcomingMoviesFetched,
+            ::onError
+        )
+    }
+
+    private fun getNowMovies() {
+        MoviesRepository.getNowMovies(
+            nowMoviesPage,
+            ::onNowMoviesFetched,
             ::onError
         )
     }
@@ -130,12 +156,33 @@ class MainActivity : AppCompatActivity() {
         attachUpcomingMoviesOnScrollListener()
     }
 
+    private fun onNowMoviesFetched(movies: List<Movie>) {
+        nowMoviesAdapter.appendMovies(movies)
+        attachNowMoviesOnScrollListener()
+    }
+
     private fun getTopRatedMovies() {
         MoviesRepository.getTopRatedMovies(
             topRatedMoviesPage,
             ::onTopRatedMoviesFetched,
             ::onError
         )
+    }
+
+    private fun attachNowMoviesOnScrollListener() {
+        nowMovies.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                val totalItemCount = nowMoviesLayoutMgr.itemCount
+                val visibleItemCount = nowMoviesLayoutMgr.childCount
+                val firstVisibleItem = nowMoviesLayoutMgr.findFirstVisibleItemPosition()
+
+                if (firstVisibleItem + visibleItemCount >= totalItemCount / 2) {
+                    nowMovies.removeOnScrollListener(this)
+                    nowMoviesPage++
+                    getTopRatedMovies()
+                }
+            }
+        })
     }
 
     private fun attachTopRatedMoviesOnScrollListener() {
