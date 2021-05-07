@@ -13,19 +13,19 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
 
     private lateinit var popularMovies: RecyclerView
-    private lateinit var popularMoviesAdapter: MoviesAdapter
+    private lateinit var popularMoviesAdapter: MoviesAdapterVertical
     private lateinit var popularMoviesLayoutMgr: LinearLayoutManager
 
     private var popularMoviesPage = 1
 
     private lateinit var topRatedMovies: RecyclerView
-    private lateinit var topRatedMoviesAdapter: MoviesAdapter
+    private lateinit var topRatedMoviesAdapter: MoviesAdapterVertical
     private lateinit var topRatedMoviesLayoutMgr: LinearLayoutManager
 
     private var topRatedMoviesPage = 1
 
     private lateinit var upcomingMovies: RecyclerView
-    private lateinit var upcomingMoviesAdapter: MoviesAdapter
+    private lateinit var upcomingMoviesAdapter: MoviesAdapterVertical
     private lateinit var upcomingMoviesLayoutMgr: LinearLayoutManager
 
     private var upcomingMoviesPage = 1
@@ -61,11 +61,11 @@ class MainActivity : AppCompatActivity() {
         upcomingMovies = findViewById(R.id.upcoming_movies)
         upcomingMoviesLayoutMgr = LinearLayoutManager(
             this,
-            LinearLayoutManager.HORIZONTAL,
+            LinearLayoutManager.VERTICAL,
             false
         )
         upcomingMovies.layoutManager = upcomingMoviesLayoutMgr
-        upcomingMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        upcomingMoviesAdapter = MoviesAdapterVertical(mutableListOf()) { movie -> showMovieDetails(movie) }
         upcomingMovies.adapter = upcomingMoviesAdapter
         //
 
@@ -74,12 +74,12 @@ class MainActivity : AppCompatActivity() {
         popularMovies = findViewById(R.id.popular_movies)
         popularMoviesLayoutMgr = LinearLayoutManager(
             this,
-            LinearLayoutManager.HORIZONTAL,
+            LinearLayoutManager.VERTICAL,
             false
         )
 
         popularMovies.layoutManager = popularMoviesLayoutMgr
-        popularMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        popularMoviesAdapter = MoviesAdapterVertical(mutableListOf()) { movie -> showMovieDetails(movie) }
         popularMovies.adapter = popularMoviesAdapter
         //
 
@@ -87,11 +87,11 @@ class MainActivity : AppCompatActivity() {
         topRatedMovies = findViewById(R.id.top_rated_movies)
         topRatedMoviesLayoutMgr = LinearLayoutManager(
             this,
-            LinearLayoutManager.HORIZONTAL,
+            LinearLayoutManager.VERTICAL,
             false
         )
         topRatedMovies.layoutManager = topRatedMoviesLayoutMgr
-        topRatedMoviesAdapter = MoviesAdapter(mutableListOf()) { movie -> showMovieDetails(movie) }
+        topRatedMoviesAdapter = MoviesAdapterVertical(mutableListOf()) { movie -> showMovieDetails(movie) }
         topRatedMovies.adapter = topRatedMoviesAdapter
         //
 
