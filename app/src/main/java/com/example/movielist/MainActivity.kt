@@ -83,6 +83,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun getDetail() {
+        MoviesRepository.getlist()
+    }
+
     private fun showMovieDetails(movie: Movie) {
         val intent = Intent(this, MovieDetailsActivity::class.java)
         intent.putExtra(MOVIE_BACKDROP, movie.backdropPath)
@@ -92,6 +96,7 @@ class MainActivity : AppCompatActivity() {
         intent.putExtra(MOVIE_RELEASE_DATE, movie.releaseDate+" 발매")
         intent.putExtra(MOVIE_OVERVIEW, movie.overview)
         intent.putExtra(MOVIE_ADULT, movie.adult)
+        Log.d("hihi",""+movie.genre_ids[0])
         intent.putExtra(MOVIE_GENRE_IDS, movie.genre_ids)
         startActivity(intent)
     }

@@ -109,4 +109,32 @@ object MoviesRepository {
                 }
             })
     }
+
+    fun getlist(
+        onSuccess: (movies: List<Object>) -> Unit,
+        onError: () -> Unit
+    ){
+        api.getlist()
+            .enqueue(object : Callback<GetMoviesResponse> {
+                override fun onResponse(
+                    call: Call<GetMoviesResponse>,
+                    response: Response<GetMoviesResponse>
+                ) {
+                    if(response.isSuccessful) {
+                        val responseBody = response.body()
+                        if(responseBody != null) {
+                            onSuccess.invoke(responseBody.genres)
+                        } else {
+                            onError.invoke()
+                        }
+                    } else {
+                        onError.invoke()
+                    }
+                }
+
+                override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
+                    onError.invoke()
+                }
+            })
+    }
 }

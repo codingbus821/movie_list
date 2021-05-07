@@ -26,4 +26,10 @@ interface Api {
         @Query("language") language: String = "ko-KR",
         @Query("page") page: Int
     ): Call<GetMoviesResponse>
+
+    @GET("/genre/movie/list")
+    fun getlist(
+        @Query("api_key") apiKey: String = "f28224ccc2569014f0d272b68b329065",
+        @Query("language") language: String = "ko-KR"
+    ): Call<GetMoviesResponse>
 }

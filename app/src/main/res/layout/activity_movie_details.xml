@@ -63,7 +63,7 @@
             android:textColor="#757575"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@+id/movie_title"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@+id/movie_adult" />
 
         <androidx.constraintlayout.widget.Barrier
             android:id="@+id/movie_poster_title_barrier"
@@ -110,7 +110,7 @@
             app:layout_constraintTop_toBottomOf="@+id/movie_rating" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/movie_adult"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

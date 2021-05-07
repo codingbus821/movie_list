@@ -3,10 +3,12 @@ package com.example.movielist
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
 import androidx.appcompat.app.ActionBar
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
@@ -27,6 +29,7 @@ class MovieDetailsActivity : AppCompatActivity() {
     private lateinit var rating: RatingBar
     private lateinit var releaseDate: TextView
     private lateinit var overview: TextView
+    private lateinit var adult: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +46,11 @@ class MovieDetailsActivity : AppCompatActivity() {
         rating = findViewById(R.id.movie_rating)
         releaseDate = findViewById(R.id.movie_release_date)
         overview = findViewById(R.id.movie_overview)
+        adult = findViewById(R.id.movie_adult)
 
         val extras = intent.extras
+
+
 
         if (extras != null) {
             populateDetails(extras)
@@ -68,6 +74,13 @@ class MovieDetailsActivity : AppCompatActivity() {
                .transform(CenterCrop())
                 .into(poster)
         }
+
+        if(extras.getBoolean(MOVIE_ADULT) == true){
+            adult.visibility = View.VISIBLE
+        }else{
+            adult.visibility = View.GONE
+        }
+
 
         title.text = extras.getString(MOVIE_TITLE, "")
         rating.rating = extras.getFloat(MOVIE_RATING, 0f) / 2
