@@ -29,9 +29,9 @@ class MoviesAdapterVertical(
     }
 
     fun appendMovies(movies: List<Movie>) {
-        this.movies.add(movies[0])
-        this.movies.add(movies[1])
-        this.movies.add(movies[2])
+        this.movies.add(movies.get(0))
+        this.movies.add(movies.get(1))
+        this.movies.add(movies.get(2))
         notifyItemRangeInserted(
             this.movies.size,
             movies.size - 1

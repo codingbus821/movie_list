@@ -1,9 +1,12 @@
 package com.example.movielist
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,6 +47,11 @@ class MainActivity : AppCompatActivity() {
 
         actionBar = supportActionBar
         actionBar?.hide()
+
+        val window = window
+        window.setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
+        window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
 
         //현재 상영중
         nowMovies = findViewById(R.id.now_movies)
