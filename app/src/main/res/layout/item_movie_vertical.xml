@@ -51,6 +51,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="right"
+                android:paddingRight="4dp"
                 android:text="TextView" />
         </LinearLayout>
 

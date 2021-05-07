@@ -29,14 +29,11 @@ class MoviesAdapterVertical(
     }
 
     fun appendMovies(movies: List<Movie>) {
-        this.movies.add(movies.get(0))
-        this.movies.add(movies.get(1))
-        this.movies.add(movies.get(2))
+        this.movies.addAll(movies)
         notifyItemRangeInserted(
             this.movies.size,
             movies.size - 1
         )
-
     }
 
     inner class MovieViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
